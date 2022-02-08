@@ -1,0 +1,21 @@
+name: CI workflow
+
+on:
+  workflow_call:
+    secrets:
+      DOCKER_SERVICE_NAME:
+        required: true
+
+jobs:
+  build:
+    uses: mvstudio/organization-workflows/build@v1
+    secrets:
+      DOCKER_REPOSITORY_NAME: ${{ secrets.DOCKER_REPOSITORY_NAME }}
+
+  report:
+    needs: build
+    if: ${{ github.ref_name == 'master' || github.ref_name == 'dev' || contains(github.event.head_commit.message, '[push image]')}}
+    uses: mvstudio/organization-workflows/report@v1
+    with:
+      image: ${{ needs.build.outputs.image }}
+      digest: ${{ needs.build.outputs.digest }}
