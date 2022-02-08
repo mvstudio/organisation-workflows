@@ -1,0 +1,17 @@
+name: "Report workflow"
+
+inputs:
+  image:
+    required: true
+    type: string
+  digest:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Report
+      run: |
+        echo Docker image name: ghcr.io/${{ github.repository }}:${{ github.ref_name }}-${{ github.run_number }}
+        echo Digest: ${{ inputs.digest }}
