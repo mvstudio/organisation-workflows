@@ -9,9 +9,6 @@ on:
       digest:
         required: true
         type: string
-      host:
-        required: true
-        type: string
 
 jobs:
   report:
@@ -22,4 +19,3 @@ jobs:
         run: |
           echo Docker image name: ghcr.io/${{ github.repository }}:${{ github.ref_name }}-${{ github.run_number }}
           echo Digest: ${{ inputs.digest }}
-          echo Host: ${{ inputs.host }}
