@@ -51,13 +51,12 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
 
       - name: Scan Docker image for vulnerabilities
-        uses: crazy-max/ghaction-container-scan@v1
-        continue-on-error: true
+        uses: aquasecurity/trivy-action@master
         with:
-          image: ${{ steps.docker_meta.outputs.tags }}
-          severity_threshold: CRITICAL
-          annotations: true
-          dockerfile: ./Dockerfile
+          image-ref: ${{ steps.docker_meta.outputs.tags }}
+          format: sarif
+          output: 'trivy-results.sarif'
+          severity: CRITICAL,HIGH
 
       - name: Push Docker image
         if: ${{ github.ref_name == 'master' || github.ref_name == 'dev' || contains(github.event.head_commit.message, '[push image]')}}
