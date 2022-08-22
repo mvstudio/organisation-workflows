@@ -19,7 +19,7 @@ on:
 jobs:
   deploy_service:
     name: Deploy service
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     outputs:
       host: ${{ steps.update_service.outputs.host }}
     steps:
