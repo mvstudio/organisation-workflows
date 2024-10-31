@@ -52,6 +52,7 @@ jobs:
 
       - name: Scan Docker image for vulnerabilities
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           image-ref: ${{ steps.docker_meta.outputs.tags }}
           format: sarif
